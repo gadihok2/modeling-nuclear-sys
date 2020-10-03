@@ -1,0 +1,267 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or epsÂ§ with pdflatex; use eps in DVI mode
+\usepackage{float}								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{listings}
+
+%SetFonts
+
+%SetFonts
+
+
+\title{CP 1 - Modelling Radioactive Decay \\
+\ NPRE 247}
+\author{Nalin Gadihoke}
+\date{02/27/2018}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+%\section{}
+%\subsection{}
+
+
+\clearpage
+
+
+\tableofcontents{}
+\thispagestyle{empty}
+\clearpage
+\pagenumbering{arabic}
+Project was written in Latex and programming was done in Python.
+\section{Background}
+\subsection{Single element decay}
+Radioactive decay is the process by which an unstable atomic nucleus emits radiation such as an alpha particle, beta particle or gamma particle with a neutrino. This process is a good example of exponential decay. Considering the case of $N_A$ decaying to $N_B$. $N_A \rightarrow N_B$. In this case decay rate is proportional to number of atoms present $N_A$.
+
+$$ \frac{-dN_A}{dt} \propto N_A $$
+
+Adding, a constant of proportionality or the decay constant, which is unique to every element, we get a general differential equation 	
+
+\begin{equation}
+\frac{dN_A}{dt}  = - \lambda_A N_A
+\end{equation}
+
+\subsection{Chain decay}
+In the case of element $N_A$ decaying to $N_B$ decaying to $N_C$ (stable), $N_A \rightarrow N_B \rightarrow N_C$, the first decay is represented by equation (1) however we need a new differential equation for the second decay of $N_B \rightarrow N_C$. Since the number of $N_B$ increases as a result of activity from $N_A$ and decreases due to its own decay into $N_C$, we can form a differential equation as follows 
+
+\begin{equation}
+\frac{dN_B}{dt}  = - \lambda_B N_B + \lambda_A N_A
+\end{equation}
+
+ The creation rate of the stable $N_C$ atoms is simply the activity of $N_B$, considering its independent decay 
+ 
+ \begin{equation}
+\frac{dN_C}{dt}  =  \lambda_B N_B 
+\end{equation}
+ 
+ These equations will be later solved in section 3.
+ 
+ 
+
+
+ \section{The assignment parameters}
+
+The assignment asks us to consider a three component decay chain, $N_A \rightarrow N_B \rightarrow N_C$, and find solutions to the respective decay equations numerically and analytically. Further, we are to graph the results as specified by the assignment instructions. The given parameters of the assignment are displayed in Table 1. 
+
+\begin{table}[htp]
+\caption{Initial Values}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+ Parameter & Value & Description \\ [0.5ex] 
+ \hline\hline
+ t\textsubscript{$half_A$} & 1.1 hours & time for half of $N_A$ atoms to decay \\ 
+ \hline
+ t\textsubscript{$half_B$} & 9.2 hours & time for half of $N_B$ atoms to decay \\
+ \hline
+  $N_A(0)$ & 100  & number of atoms of $N_A$ at $t=0$ \\
+ \hline
+   $N_B(0)$ & 0  & number of atoms of $N_B$ at $t=0$ \\
+ \hline
+  $N_C(0)$ & 0  & number of atoms of $N_C$ at $t=0$ \\
+ \hline
+ t\textsubscript{final} & 50 hours & time for full simulation \\[1ex]
+ \hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+
+\section{Theory}
+The theory section goes over the theoretical aspect of what was programmed.
+\subsection{Analytical Solutions}
+This approach included solving equations (1), (2) and(3) by integrating both sides to find equations for $N_A(t)$, $N_B(t)$ and $N_C(t)$. 
+
+\begin{equation}
+N_A(t)  = N_A(0)e^{-\lambda_A t}
+\end{equation}
+
+Now, we can calculate the half life of $N_A$ by setting $N_A(t) = N(0)/2$ which results in
+
+$$\frac{1}{2} = e^{-\lambda_A t} $$
+
+
+$$t\textsubscript{$half_A$}  = \frac{ln2}{\lambda_A}$$
+
+or, the decay constant can be represented as 
+
+\begin{equation}
+\lambda_A = \frac{ln2}{t\textsubscript{$half_A$}}
+\end{equation}
+
+This formula is later used to calculate $\lambda_A$, $\lambda_B$ and $\lambda_C$  
+
+Similarily,
+
+solving (2) we get 
+
+\begin{equation}
+N_B(t)  = \frac{N_A(0)\lambda_A}{\lambda_B - \lambda_A} (e^{-\lambda_A t} - e^{-\lambda_B t})
+\end{equation}
+
+and solving (3) we get
+
+\begin{equation}
+N_C(t)  = N_C(0) + \lambda_B N_B(0) (1 - e^{-\lambda_Bt}) + \frac{N_A(0)}{\lambda_B - \lambda_A} (\lambda_B(1 - e^{-\lambda_A t}) - \lambda_A(1 -e^{-\lambda_B t}))
+\end{equation}
+
+
+where values of $N_A(0)$,$N_B(0)$ and $N_C(0)$ are taken from Table 1. $\lambda_A$ and $\lambda_B$ are calculated using (5) for which the values of $t\textsubscript{half}$ are taken from the same table
+
+To find the equation for $t\textsubscript{max}$, the time for $N_B(t)$ to reach maximum value can be found by setting the value of $\frac{dN_B}{dt} = 0$. This means
+
+$$\lambda_A e^{-\lambda_A t\textsubscript{max}} = \lambda_B e^{-\lambda_B t\textsubscript{max}} $$
+$$t\textsubscript{max} = \frac{ln (\frac{\lambda_B}{\lambda_A})}{\lambda_B - \lambda_A}$$
+
+Using, values from Table 1, we calculate t\textsubscript{max} for maximum $N_B$ to be 3.828 seconds. To verify this, $\frac{d^2N_B}{dt^2} $  at t = t\textsubscript{max} was calculated and was found to be $< 0$, proving t\textsubscript{max} is the time for maximum $N_B(t)$
+
+ \subsection{Numerical Solutions}
+ Here, the finite difference approach was used in computing the values for $N_A(t+\delta t)$, $N_B(t+\delta t)$ and $N_C(t+\delta t)$ which are essentially the values of $N_A(t)$, $N_B(t)$ and $N_C(t)$ for every time step given an initial $N_A(0)$, $N_B(0)$ , $N_C(0)$ and $\delta t$. By definition, a derivative is 
+ 
+$$ \frac{df}{dt}  = \lim_{\delta t \rightarrow 0 } \frac{f(x+\delta t)-f(x)}{\delta t}$$
+
+Applying this to (1), (2) and (3) we get
+
+$$\frac{N_A(t+\delta t)-N_A(t)}{\delta t}  = - \lambda_A N_A(t)$$
+
+
+$$\frac{N_B(t+\delta t)-N_B(t)}{\delta t}  = - \lambda_B N_B(t) + \lambda_A N_A(t)$$
+
+$$\frac{N_C(t+\delta t)-N_C(t)}{\delta t}  =  \lambda_B N_B(t) $$
+
+re-arranging, 
+\begin{equation}
+N_A(t+\delta t)  = - \lambda_A N_A(t)\delta t + N_A(t) 
+\end{equation}
+\begin{equation}
+N_B(t+\delta t)  = (- \lambda_B N_B(t) + \lambda_A N_A(t))\delta t + N_B(t) 
+\end{equation}
+\begin{equation}
+N_C(t+\delta t)  =  \lambda_C N_C(t)\delta t + N_C(t) 
+\end{equation}
+It is to be noted that three different values of $\delta t$ were considered, 1 hour, 0.5 hours and 0.25 hours, and their impacts on the model will be discussed in the next section, along with modeling details and information on data points. 
+
+\newpage
+\section{Modeling}
+
+Now, the programming and plotting part of the project is explained.
+\subsection{Analytical Solutions}
+
+The function $odeint$ from the $integrate$ library in python was used to solve the equations (1), (2) and (3) over 1500 time stamps between $t = 0\ to\ t\textsubscript{final}$. The values for $N_A(t)$, $N_B(t)$ and $N_C(t)$ were stored as a list containing three elements which were the corresponding arrays. 
+
+
+\begin{lstlisting}[language = python]
+def model_b(N_0_list,t):
+	na = N_0_list[0]
+	nb = N_0_list[1]
+	nc = N_0_list[2]
+	dnadt = -lambda_a*na
+	dnbdt = (-lambda_b*nb)+(lambda_a*na)
+	dncdt = lambda_b*nb
+	return [dnadt,dnbdt,dncdt]
+n = odeint(model_b,N_0_list,t)
+\end{lstlisting}
+
+Array Nb was later used in figure 1 for plotting and the time for the maximum value of $N_B$ in the array Nb was later used for plotting in figure 3. Detailed code can be found in part 1 of CP\_1.py, the code file. 
+
+
+\subsection{Numerical solutions}
+This part utilized equations (8), (9) and (10). These were then programmed as a function $numerical$ which accepts lists of $N(0)$ and $\lambda$ values and $\delta t$ and outputs a list whose elements are the arrays $N_A(t)$, $N_B(t)$, $N_C(t)$ and $t$ (which contains the time values used for plotting). The core equations were modeled as follows between $t = 0\ to\ t\textsubscript{final}$  with $\frac{t\textsubscript{final}}{\delta t}$ time steps.
+
+\begin{lstlisting}[language = python]
+na[i] = (- lambda_list[0] * na[i-1] * t_del) + na[i-1]
+
+nb[i] = ((-lambda_list[1]*nb[i-1]) + (lambda_list[0]*na[i-1]))*t_del 
+						+ nb[i-1]
+
+nc[i] = (lambda_list[1]*nb[i-1]*t_del) + nc[i-1]
+\end{lstlisting}
+
+
+\subsubsection{} 
+Values of $N_B(t)$ were plotted against $t $ in hours for three different values of $\delta t$ - 1 hour (coarse), 0.5 hours (medium) and 0.25 hours (fine). The analytical solution array Nb was plotted too. The arrays were produced using the function described previously. Detailed code can be found in part 2 of CP\_1.py, the code file. $t = 0\ to\ t\textsubscript{final}$
+
+%\graphicspath{ {/Users/nalingadihoke/Desktop/Spring 2018/npre 247/CP 1/CP_1_report_Latex/} }
+\renewcommand{\figurename}{Fig.}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{{"/Users/nalingadihoke/Desktop/spring 2020/NPRE 455/247_cps/CP 1/CP_1_report_Latex/Nb_vs_Time_1".png}}
+\caption{$N_B(t)$ vs Time, for different values of $\delta t$}
+\label{default}
+\end{center}
+\end{figure}
+
+\newpage
+\subsubsection{}
+Numerical values of $N_A(t)$, $N_B(t)$ , $N_C(t)$ and $N_total(t)$ were plotted against $t$. Here $\delta t$ was considered to be 0.125 hours as it resulted the smoothest curves. $t = 0\ to\ t\textsubscript{final}$
+
+\renewcommand{\figurename}{Fig.}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{{"/Users/nalingadihoke/Desktop/spring 2020/NPRE 455/247_cps/CP 1/CP_1_report_Latex/radionuclides_vs_time_1".png}}
+\caption{$N_A(t)$, $N_B(t)$, $N_C(t)$ and N\_total vs Time}
+\label{default}
+\end{center}
+\end{figure} 
+
+\subsubsection{}
+
+Using the $numerical$ function iteratively, values of time to reach maximum $N_B(t)$ were plotted against different values of $1/\delta t$. $1/\delta t$ was plotted to have values between 1 to 310 in 310 time steps which means $\delta t$ is between 1 and 0.0032258. The time of maximum $N_B(t)$ using the analytical solution was also plotted.
+
+\renewcommand{\figurename}{Fig.}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{{"/Users/nalingadihoke/Desktop/spring 2020/NPRE 455/247_cps/CP 1/CP_1_report_Latex/max_Nb_vs_oneoverdel_time_1".png}}
+\caption{Time to reach maximum $N_B$ vs $\frac{1}{\delta t}$}
+\label{default}
+\end{center}
+\end{figure} 
+
+\subsection{Reading and writing to files}
+
+The parameters were read into the python script from a .csv file. The results and necessary data needed to reproduce the results, in other words to reproduce the three figures were written into an excel file using the $writer$  function. The columns of data have self-descriptive headings and the input parameters are included in the output file too. 
+
+\section{Summary/Conclusion of results}
+
+1. From figure 1 we are able to deduce that for smaller and smaller values of $\delta t$, the numerical solution for $N_B(t)$ approaches the analytical solution of $N_B(t)$. Furthermore, larger values of $\delta t$ result in less smooth graph curves as compared to smaller values of $\delta t$. 
+
+2. Figure 2 demonstrates how $N_A(t)$, $N_B(t)$ , $N_C(t)$ and $N_total(t)$ decay over 50 hours. It also shows how $N_A$ decays considerably faster that $N_B$.
+
+3. Figure 3 plots the analytical solution of time of maximum $N_B(t)$, which was found to be $3.835 seconds$. We can clearly see how the numerical solution for the same approaches the analytical solutions for smaller and smaller values of $\delta t$, i.e. larger values of $1/\delta t$  
+
+\section{References/Sources of information}
+
+1. www.sharelatex.com
+
+2. www.stackoverflow.com
+
+3. www.wikipedia.com
+
+4. Mustafa Bakaç, Asl?han Kartal Ta?o?lu, Gizem Uyumaz, "Modeling radioactive decay", Procedia - Social and Behavioral Sciences, Volume 15, 2011.
+
+\end{document}  

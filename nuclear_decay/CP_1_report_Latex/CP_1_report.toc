@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Background}{1}% 
+\contentsline {subsection}{\numberline {1.1}Single element decay}{1}% 
+\contentsline {subsection}{\numberline {1.2}Chain decay}{1}% 
+\contentsline {section}{\numberline {2}The assignment parameters}{2}% 
+\contentsline {section}{\numberline {3}Theory}{2}% 
+\contentsline {subsection}{\numberline {3.1}Analytical Solutions}{2}% 
+\contentsline {subsection}{\numberline {3.2}Numerical Solutions}{3}% 
+\contentsline {section}{\numberline {4}Modeling}{5}% 
+\contentsline {subsection}{\numberline {4.1}Analytical Solutions}{5}% 
+\contentsline {subsection}{\numberline {4.2}Numerical solutions}{5}% 
+\contentsline {subsubsection}{\numberline {4.2.1}}{6}% 
+\contentsline {subsubsection}{\numberline {4.2.2}}{7}% 
+\contentsline {subsubsection}{\numberline {4.2.3}}{7}% 
+\contentsline {subsection}{\numberline {4.3}Reading and writing to files}{8}% 
+\contentsline {section}{\numberline {5}Summary/Conclusion of results}{8}% 
+\contentsline {section}{\numberline {6}References/Sources of information}{9}% 

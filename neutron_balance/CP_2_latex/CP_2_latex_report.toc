@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Theory}{1}% 
+\contentsline {subsection}{\numberline {1.1}Neutron Balance in Infinite Space}{1}% 
+\contentsline {subsection}{\numberline {1.2}Multi-group Migration and Fission Matrices}{2}% 
+\contentsline {section}{\numberline {2}2G Eigenvalue/Eigenvector Problem}{4}% 
+\contentsline {subsection}{\numberline {2.1}Inputs}{4}% 
+\contentsline {subsection}{\numberline {2.2}The Matrices}{4}% 
+\contentsline {subsection}{\numberline {2.3}Analytical Solution}{4}% 
+\contentsline {subsection}{\numberline {2.4}Solution using the python 'eig' function}{5}% 
+\contentsline {subsection}{\numberline {2.5}Power Iteration}{6}% 
+\contentsline {section}{\numberline {3}8G Eigenvalue/Eigenvector Problem}{7}% 
+\contentsline {subsection}{\numberline {3.1}Inputs}{7}% 
+\contentsline {subsection}{\numberline {3.2}The Matrices}{7}% 
+\contentsline {subsection}{\numberline {3.3}Solution using the python 'eig' function}{8}% 
+\contentsline {subsection}{\numberline {3.4}Power Iteration}{8}% 
+\contentsline {section}{\numberline {4}Results}{8}% 
+\contentsline {section}{\numberline {5}References}{9}% 
